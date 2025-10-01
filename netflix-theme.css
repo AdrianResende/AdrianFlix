@@ -96,6 +96,16 @@ header.scrolled {
   transition: var(--transition);
   box-shadow: var(--shadow-primary);
   border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.favoritos::before {
+  content: '\f004';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 1rem;
 }
 
 .favoritos:hover {
@@ -170,9 +180,17 @@ header.scrolled {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   transition: var(--transition);
   position: relative;
   overflow: hidden;
+}
+
+.lista-filmes a::before {
+  content: '\f04b';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 1.1rem;
 }
 
 .lista-filmes a::before {
@@ -289,6 +307,33 @@ header.scrolled {
   box-shadow: var(--shadow-primary);
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+/* Ícones específicos para diferentes botões */
+.area-buttons button[class*="salvar"]::before,
+.area-buttons button:first-child::before {
+  content: '\f004';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+}
+
+.area-buttons button[class*="trailer"]::before,
+.area-buttons button:nth-child(2)::before {
+  content: '\f04b';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+}
+
+.area-buttons a[href*="youtube"]::before,
+.area-buttons a[href*="trailer"]::before {
+  content: '\f16a';
+  font-family: 'Font Awesome 6 Brands';
+  font-weight: 400;
+  margin-right: 5px;
 }
 
 .area-buttons button::before {
@@ -401,6 +446,17 @@ header.scrolled {
   transition: var(--transition);
   text-decoration: none;
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.excluir button::before,
+.excluir a::before {
+  content: '\f2ed';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 0.8rem;
 }
 
 .excluir button:hover,

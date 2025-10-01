@@ -1,0 +1,123 @@
+/* ================================
+   FALLBACK PARA IMAGENS DOS FILMES
+   ================================ */
+
+/* Solução para quando as imagens da API não carregam */
+
+/* Placeholder para imagens que falharam */
+.lista-filmes img {
+  background: linear-gradient(135deg, #333, #555);
+  background-size: cover;
+  background-position: center;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Fallback quando a imagem não carrega */
+.lista-filmes img::before {
+  content: '🎬';
+  font-size: 4rem;
+  position: absolute;
+  color: var(--netflix-red);
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.lista-filmes img::after {
+  content: 'Carregando...';
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--netflix-white);
+  font-size: 0.9rem;
+  z-index: 2;
+}
+
+/* Quando a imagem carrega com sucesso */
+.lista-filmes img[src]:not([src=""]) {
+  background: none;
+}
+
+.lista-filmes img[src]:not([src=""])::before,
+.lista-filmes img[src]:not([src=""])::after {
+  display: none;
+}
+
+/* Estado de erro da imagem */
+.lista-filmes img.error {
+  background: linear-gradient(135deg, var(--netflix-dark-gray), var(--netflix-gray));
+  border: 2px dashed var(--netflix-red);
+}
+
+.lista-filmes img.error::before {
+  content: '❌';
+  font-size: 3rem;
+}
+
+.lista-filmes img.error::after {
+  content: 'Falha ao carregar';
+  color: var(--netflix-red);
+}
+
+/* Loading skeleton */
+.skeleton {
+  background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Imagens de exemplo para demonstração */
+.demo-image-1 {
+  background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), 
+                    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><rect fill="%23e50914" width="400" height="600"/><text x="200" y="300" text-anchor="middle" fill="white" font-size="24" font-family="Arial">AÇÃO</text><text x="200" y="330" text-anchor="middle" fill="white" font-size="16">Filme de Exemplo</text></svg>');
+}
+
+.demo-image-2 {
+  background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), 
+                    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><rect fill="%23b20710" width="400" height="600"/><text x="200" y="300" text-anchor="middle" fill="white" font-size="24" font-family="Arial">DRAMA</text><text x="200" y="330" text-anchor="middle" fill="white" font-size="16">Série de Exemplo</text></svg>');
+}
+
+.demo-image-3 {
+  background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), 
+                    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><rect fill="%23141414" width="400" height="600"/><text x="200" y="300" text-anchor="middle" fill="white" font-size="24" font-family="Arial">COMÉDIA</text><text x="200" y="330" text-anchor="middle" fill="white" font-size="16">Show de Exemplo</text></svg>');
+}
+
+/* Efeito hover nas imagens */
+.lista-filmes img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+/* Responsive para imagens */
+@media (max-width: 768px) {
+  .lista-filmes img {
+    min-height: 300px;
+  }
+  
+  .lista-filmes img::before {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .lista-filmes img {
+    min-height: 250px;
+  }
+  
+  .lista-filmes img::before {
+    font-size: 2.5rem;
+  }
+}
