@@ -78,7 +78,7 @@ class ModernUIController {
                         <h1 class="hero-title">${movie.title}</h1>
                         <p class="hero-description">${movie.overview || 'Sem descrição disponível.'}</p>
                         <div class="hero-buttons">
-                            <button class="btn-play" onclick="playMovie(${movie.id})">▶️ Assistir</button>
+                            <button class="btn-play" onclick="playMovie(${movie.id}, '${movie.title.replace(/'/g, "\\'")}')">▶️ Assistir Trailer</button>
                             <button class="btn-info" onclick="showMovieInfo(${movie.id})">ℹ️ Mais Informações</button>
                         </div>
                     </div>
@@ -150,8 +150,8 @@ class ModernUIController {
                             ${rating !== 'N/A' ? `<span>• ${rating}/10</span>` : ''}
                         </div>
                         <div class="poster-actions">
-                            <button class="action-btn">▶️ Play</button>
-                            <button class="action-btn">➕ Lista</button>
+                            <button class="action-btn" onclick="event.stopPropagation(); playMovie(${movie.id}, '${movie.title.replace(/'/g, "\\'")}')">▶️ Play</button>
+                            <button class="action-btn" onclick="event.stopPropagation(); alert('Adicionado à lista!')">➕ Lista</button>
                         </div>
                     </div>
                 </div>
@@ -227,14 +227,61 @@ class ModernUIController {
             slides[this.currentHeroSlide].classList.add('active');
         }, 5000);
     }
+
+    async getMovieTrailer(movieId, movieTitle) {
+        try {
+            // Tenta buscar trailer na API TMDB
+            const response = await fetch(`${this.baseURL}/movie/${movieId}/videos?api_key=${this.apiKey}&language=pt-BR`);
+            const data = await response.json();
+            
+            // Procura por trailer oficial em português
+            let trailer = data.results.find(video => 
+                video.type === 'Trailer' && 
+                video.site === 'YouTube' && 
+                video.official === true
+            );
+            
+            // Se não encontrar em português, busca em inglês
+            if (!trailer) {
+                const responseEN = await fetch(`${this.baseURL}/movie/${movieId}/videos?api_key=${this.apiKey}&language=en-US`);
+                const dataEN = await responseEN.json();
+                trailer = dataEN.results.find(video => 
+                    video.type === 'Trailer' && 
+                    video.site === 'YouTube'
+                );
+            }
+            
+            if (trailer) {
+                // Abre o trailer do YouTube
+                window.open(`https://www.youtube.com/watch?v=${trailer.key}`, '_blank');
+            } else {
+                // Se não encontrar na API, busca no YouTube
+                const searchQuery = encodeURIComponent(`${movieTitle} trailer oficial`);
+                window.open(`https://www.youtube.com/results?search_query=${searchQuery}`, '_blank');
+            }
+        } catch (error) {
+            console.error('Erro ao buscar trailer:', error);
+            // Fallback: busca no YouTube
+            const searchQuery = encodeURIComponent(`${movieTitle} trailer oficial`);
+            window.open(`https://www.youtube.com/results?search_query=${searchQuery}`, '_blank');
+        }
+    }
 }
 
 function showMovieModal(id, title) {
-    alert(`🎬 ${title}\n\nModal completo em breve!`);
+    modernUI.getMovieTrailer(id, title);
 }
 
-function playMovie(id) {
-    alert('▶️ Player em breve!');
+function playMovie(id, title) {
+    if (!title) {
+        // Busca o título do filme se não foi passado
+        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=e088c5860f1e45132604a74eb353e770&language=pt-BR`)
+            .then(res => res.json())
+            .then(movie => modernUI.getMovieTrailer(id, movie.title))
+            .catch(() => modernUI.getMovieTrailer(id, 'Filme'));
+    } else {
+        modernUI.getMovieTrailer(id, title);
+    }
 }
 
 function showMovieInfo(id) {

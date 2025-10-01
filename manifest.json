@@ -1,0 +1,42 @@
+{{
+
+  "name": "AdrianFlix",  "short_name": "AdrianFlix",
+
+  "short_name": "AdrianFlix",  "name": "AdrianFlix - Streaming Platform",
+
+  "description": "Plataforma de streaming de filmes com trailers oficiais",  "icons": [
+
+  "start_url": "/",    {
+
+  "display": "standalone",      "src": "favicon.ico",
+
+  "background_color": "#141414",      "sizes": "64x64 32x32 24x24 16x16",
+
+  "theme_color": "#e50914",      "type": "image/x-icon"
+
+  "icons": [    },
+
+    {    {
+
+      "src": "favicon.svg",      "src": "logo192.png",
+
+      "sizes": "any",      "type": "image/png",
+
+      "type": "image/svg+xml",      "sizes": "192x192"
+
+      "purpose": "any maskable"    },
+
+    }    {
+
+  ]      "src": "logo512.png",
+
+}      "type": "image/png",
+
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#e50914",
+  "background_color": "#141414"
+}
