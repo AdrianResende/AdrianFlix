@@ -1,0 +1,31 @@
+[build]
+  # Diretório base - deixe vazio ou use "." para a raiz
+  base = "."
+  
+  # Comando de build - não precisa para projeto estático
+  command = ""
+  
+  # Diretório de publicação - raiz do projeto
+  publish = "."
+
+# Configurações de redirecionamento para SPA
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers de segurança e cache
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
