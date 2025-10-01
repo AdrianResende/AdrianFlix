@@ -1,0 +1,271 @@
+/* =================================
+   NETFLIX THEME - ADVANCED FEATURES
+   ================================= */
+
+/* Configurações avançadas para melhor performance e experiência */
+
+/* Otimizações de performance */
+* {
+  will-change: auto;
+}
+
+.lista-filmes article:hover {
+  will-change: transform, box-shadow;
+}
+
+.area-buttons button:hover {
+  will-change: transform, background;
+}
+
+/* Suporte para HDR e Wide Color Gamut */
+@media (color-gamut: p3) {
+  :root {
+    --netflix-red: color(display-p3 0.898 0.035 0.078);
+    --netflix-dark-red: color(display-p3 0.698 0.027 0.063);
+  }
+}
+
+/* Configurações para telas de alta densidade */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .lista-filmes img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Suporte para modo de alto contraste */
+@media (prefers-contrast: high) {
+  :root {
+    --netflix-red: #ff0000;
+    --netflix-white: #ffffff;
+    --netflix-black: #000000;
+  }
+  
+  .lista-filmes article {
+    border: 2px solid var(--netflix-white);
+  }
+}
+
+/* Configurações para temas do sistema */
+@media (prefers-color-scheme: light) {
+  /* Mantém tema escuro mesmo em modo claro do sistema */
+  body {
+    background: var(--netflix-black);
+    color: var(--netflix-white);
+  }
+}
+
+/* Melhorias de acessibilidade */
+@media (prefers-reduced-transparency) {
+  header {
+    backdrop-filter: none;
+    background: var(--netflix-black);
+  }
+}
+
+/* Configurações para dispositivos com pouca bateria */
+@media (prefers-reduced-motion: reduce) {
+  .lista-filmes article,
+  .area-buttons button,
+  .favoritos {
+    transition: none;
+    animation: none;
+  }
+  
+  .loading::after {
+    animation: none;
+    border-top-color: var(--netflix-red);
+  }
+}
+
+/* Suporte para print */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  header,
+  .area-buttons,
+  .favoritos {
+    display: none;
+  }
+  
+  .lista-filmes article {
+    break-inside: avoid;
+    background: white;
+    border: 1px solid black;
+  }
+}
+
+/* Configurações para TV e telas grandes */
+@media (min-width: 1920px) {
+  .lista-filmes {
+    max-width: 1400px;
+  }
+  
+  .filme-info {
+    max-width: 1200px;
+  }
+  
+  .lista-filmes strong {
+    font-size: 2.2rem;
+  }
+  
+  .filme-info h1 {
+    font-size: 3rem;
+  }
+}
+
+/* Melhorias para dispositivos touch */
+@media (hover: none) and (pointer: coarse) {
+  .lista-filmes article:hover {
+    transform: none;
+  }
+  
+  .lista-filmes article:active {
+    transform: scale(0.98);
+  }
+  
+  .area-buttons button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Configurações para landscape em mobile */
+@media (max-height: 480px) and (orientation: landscape) {
+  .app {
+    padding-top: 60px;
+  }
+  
+  header {
+    height: 50px;
+  }
+  
+  .logo {
+    font-size: 1.2rem;
+  }
+}
+
+/* Suporte para foldable devices */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .lista-filmes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .lista-filmes article {
+    margin-bottom: 0;
+  }
+}
+
+/* Configurações avançadas de loading */
+.loading-advanced {
+  position: relative;
+  display: inline-block;
+}
+
+.loading-advanced::before {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border: 3px solid transparent;
+  border-top: 3px solid var(--netflix-red);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loading-advanced::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: 10px;
+  left: 10px;
+  border: 3px solid transparent;
+  border-bottom: 3px solid var(--netflix-red);
+  border-radius: 50%;
+  animation: spin 0.5s linear infinite reverse;
+}
+
+/* Efeitos de partículas para hover */
+.particle-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.particle-effect::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, var(--netflix-red) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0;
+  animation: particles 3s ease-in-out infinite;
+}
+
+@keyframes particles {
+  0%, 100% {
+    opacity: 0;
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    opacity: 0.1;
+    transform: rotate(180deg) scale(1.2);
+  }
+}
+
+/* Configurações para navegação por teclado */
+.keyboard-navigation *:focus {
+  outline: 2px solid var(--netflix-red);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip links para acessibilidade */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--netflix-red);
+  color: var(--netflix-white);
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 1001;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Configurações para modo de economia de dados */
+@media (prefers-reduced-data: reduce) {
+  .lista-filmes img {
+    background: var(--netflix-gray);
+  }
+  
+  .loading::after {
+    display: none;
+  }
+}
+
+/* Suporte para notch em dispositivos */
+@supports (padding: max(0px)) {
+  .app {
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+  }
+  
+  header {
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+    padding-top: env(safe-area-inset-top);
+  }
+}
